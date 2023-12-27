@@ -24,6 +24,7 @@ struct WindowCLI{
 char ReadKeyboardKey();
 
 void ConfigureWindowCLI(struct WindowCLI* window, int bufferSize, int bufferEndLine);
+void UpdateWindowCLIBuffer(struct WindowCLI* window, int initialIndex, char* newBufferValue);
 void DrawWindowCLI(struct WindowCLI* window);
 
 #endif

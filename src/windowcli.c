@@ -26,7 +26,7 @@ void EnableTerminalRawMode()
   raw.c_oflag &= ~(OPOST);
   raw.c_cflag |= (CS8);
   raw.c_cc[VMIN] = 0;
-  raw.c_cc[VTIME] = 1;
+  raw.c_cc[VTIME] = 0.1;
 
   if(tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw) == -1) Die("tcsetattr");
 }
@@ -46,9 +46,10 @@ void ConfigureWindowCLIBuffer(struct WindowCLI* window, int bufferSize, int buff
   if(!window->buffer) free(window->buffer); 
   window->buffer = (char*)malloc(window->bufferSize * sizeof(char));
 
+  //Fill buffer with spaces
   for(int bufferDrawn = 0; bufferDrawn <= window->bufferSize; bufferDrawn++)
   {
-    window->buffer[bufferDrawn] = ' ';
+    window->buffer[bufferDrawn] = '=';
   }
 }
 
@@ -74,9 +75,14 @@ void DrawWindowCLI(struct WindowCLI* window)
   printf("\r\n");
 }
 
-/*
-void ChangeInWindowCLIBuffer(struct WindowCLI* window, firstIndex, char* newBufferValue)
+void UpdateWindowCLIBuffer(struct WindowCLI* window, int initialIndex, char* newBufferValue)
 {
-AAAAAAAAAAAAAAAAAAAAAAAAAAAA
+  int newBufferValueLength = strlen(newBufferValue);
+  
+  if((initialIndex + newBufferValueLength) >= window->bufferSize) Die("bufferupdate");
+
+  for(int updatedValues = 0; updatedValues < newBufferValueLength; updatedValues++)
+  {
+    window->buffer[initialIndex + updatedValues] = newBufferValue[updatedValues];
+  }
 }
-*/

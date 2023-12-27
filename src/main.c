@@ -1,7 +1,6 @@
-#include <stdio.h>
-#include <unistd.h>
-
 #include "windowcli.h"
+
+void RunGame();
 
 int main()
 {
@@ -9,23 +8,25 @@ int main()
 
   ConfigureWindowCLI(&window, 638, 29);
 
-  DrawWindowCLI(&window);
+  printf("%d", window.bufferSize);
 
-  //while(1)
-  //{
-  //  char key = ReadKeyboardKey();
-    //if(key != 0) printf("%d ('%c')\r\n", key, key);
-  //}
+  RunGame(&window);
 
   return 0;
+
+/*
+DrawWindowCLI(&window);
+
+while(1)
+  {
+    char key = ReadKeyboardKey();
+    if(key != 0) printf("%d ('%c')\r\n", key, key);
+  }
+*/
 }
 
-void DrawGame()
+void RunGame(struct WindowCLI* window)
 {
-
-}
-
-void DrawInfo()
-{
-
+  UpdateWindowCLIBuffer(window, 62, "STATS");
+  DrawWindowCLI(window);
 }
